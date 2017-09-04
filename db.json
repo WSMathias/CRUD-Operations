@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "name": "Aloo Parata",
+      "price": 90,
+      "description": "2 parathas",
+      "id": 1
+    },
+    {
+      "name": "Mutter Paneer",
+      "price": 265,
+      "description": "gdfgvndfjkgn",
+      "id": 2
+    }
+  ]
+}
