@@ -38,7 +38,7 @@ read more about json-server from https://github.com/typicode/json-server
 After successfully completing above steps to type http://localhost/Indian-Kitchen in your browser
 
 ###### NOTE:
-Eveytime you restart your computer type following command to run json-server
+Everytime you restart your computer type following command to run json-server
 ```bash
 $ cd /var/www/html/Indian-Kitchen && json-server -watch db.json
 ```
