@@ -1,16 +1,24 @@
 # Indian-Kitchen
 Catalog of indian dishes with following features
+
 *Add
+
 *Edit
+
 *Deleted
 
 
 Bulit using HTML,CSS and JavaScript
 ## Requirements:
+
 *linux OS
+
 *Apache web server
+
 *Nodejs
+
 *npm
+
 *json-server
 
 ## Installation of dependencies.
