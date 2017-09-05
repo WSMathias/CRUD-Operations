@@ -33,7 +33,7 @@ read more about json-server from https://github.com/typicode/json-server
 ## Setting up server:
 ```bash
  $ cd /var/www/
- $ sudo chmod -R 777 html && cd html
+ $ sudo chmod -R 775 html && cd html
  $ git clone https://github.com/WSMathias/Indian-Kitchen.git
  $ cd Indian-Kitchen && json-server -watch db.json
 ```
