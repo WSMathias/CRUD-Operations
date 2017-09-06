@@ -20,13 +20,19 @@
 }
 .ibox{
   padding: 5px;
+  overflow: hidden;
+  word-wrap: break-word;
   height: auto;
+  min-height: 150px;
+  max-height: auto;
   text-align: center;
   border-style: ridge;
   background-color: #F36450;
 }
 .ibox-text{
   text-align: center;
+  overflow: hidden;
+  word-wrap: break-word;
   padding-left: 15px;
   /* background-color: #87CCCD; */
 }
@@ -47,12 +53,12 @@
   border-style: solid;
   background-color: #cb202d;
 }
-/* #close{
+#close{
   position: absolute;
   top: 0;
   right: 0;
   z-index: 5;
-} */
+}
 .tools{
   position: absolute;
   top: 0;

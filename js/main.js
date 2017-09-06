@@ -10,6 +10,7 @@ var inDes="";
 var ADD=false;
 var id =0;
 var count=0;
+var jsonXhr = new JSONClient("http://localhost:3000/items/");
 
 $( document ).ready(function() {
     loadItems();
@@ -53,15 +54,20 @@ function addbtn(){
 
 function addData(){
     var newItem={name:inName,price:inPrice,description:inDes};
-    Transfer(newItem,POST).then(
-        loadItems()
-    ,function (e) {
-        // handle errors
-    });
+    // console.log(newItem)
+    jsonXhr.post(newItem).then(function (result){
+        console.log(result)
+        loadItems()});
+    // Transfer(newItem,POST).then(
+    //     loadItems()
+    // ,function (e) {
+    //     // handle errors
+    // });
+    
 }
 function editData(){
     var newItem={id:inId,name:inName,price:inPrice,description:inDes};
-    Transfer(newItem,UPDATE).then(function(e){
+    Transfer(newItem,UPDATE).then(function(resulte){
     loadItems();
     },function (e) {
     // handle errors
@@ -134,13 +140,13 @@ function loadFull(id){
 }
 
 function loadItems(){
-Transfer("",GET).then(function (data) {
-    list=data;
     var mybody=document.getElementById("item_list");
     var myNav=document.getElementById("nav-north");
     mybody.innerHTML="";
     myNav.innerHTML="";
-    for (i in list){
+    jsonXhr.get().then(function(response){
+        list=response;
+        for (i in list){
         mybody.innerHTML+=`<div class="col-sm-3  col-xs-6 ibox"  >
         <img src="images/birds.jpg" onclick="showFull(`+list[i].id+`)" class="img-responsive margin"  alt="Image">
         <div class="ibox-text">
@@ -153,11 +159,7 @@ Transfer("",GET).then(function (data) {
         </div>
         </div>`
         myNav.innerHTML+=`<li><a href="#">`+list[i].name+`</a></li>`
-
-    }
-    }, function (e) {
-      // handle errors
-    });
+       }});
 
 }
 
