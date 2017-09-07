@@ -6,28 +6,29 @@ class HttpClient{
         if(this.url.substr(-1)!="/"){
             this.url=this.url+"/"
         }
+        this.id=""
         this.qry=""
-        this.data="";
-        this.xhr = new XMLHttpRequest();
-        this.xhr.withCredentials = true;
+        this.data=""
     }
 //xhr.get("?q="query")
 get(qry=""){
     var client=this;
     return new Promise(function(resolve,reject){
-    client.xhr.open("GET", client.url+qry);
-    client.xhr.setRequestHeader("content-type", "application/json");      
-    client.xhr.setRequestHeader("cache-control", "no-cache");
-    client.xhr.onload = () =>{
-        if (client.xhr.status==200){
-            console.log(client.xhr.statusText)
-            resolve(client.xhr.response);
+    let xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.open("GET", client.url+qry);
+    xhr.setRequestHeader("content-type", "application/json");      
+    xhr.setRequestHeader("cache-control", "no-cache");
+    xhr.onload = () =>{
+        if (xhr.status==200){
+            console.log(xhr.statusText)
+            resolve(xhr.response);
         }
         else
-            reject(client.xhr.statusText)
+            reject(xhr.statusText)
     } 
-    client.xhr.onerror = () => reject("Network Error")
-    client.xhr.send("");
+    xhr.onerror = () => reject("Network Error")
+    xhr.send("");
     });
 
 }
@@ -36,62 +37,74 @@ post(data,qry=""){
     this.qry=qry;
     this.data=data;
     var client=this; 
-    console.log(this.data);  
-
-    //this.data = JSON.parse(this.data);
-
-
+    // console.log(this.data);
     return new Promise(function(resolve,reject){
-    client.xhr.open("POST", client.url+client.qry);
-    client.xhr.setRequestHeader("content-type", "application/json");
-    client.xhr.setRequestHeader("cache-control", "no-cache");
-    client.xhr.onload = () =>{
-        console.log(client.xhr.statusText)        
-        if (client.xhr.status==201){
-            resolve(client.xhr.responseText);
-            console.log(client.xhr.responseText);
+    let xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.open("POST", client.url+client.qry);
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("cache-control", "no-cache");
+    xhr.onload = () =>{     
+        if (xhr.status==201){
+            //console.log(xhr.responseText);//same as data
+            resolve(xhr.responseText);
+            
         }
         else{
-            reject(client.xhr.statusText);
+            reject(xhr.responseText);
         }
     } 
-    client.xhr.onerror = () => reject("Network Error")
-    console.log(client.data); 
-    client.xhr.send(client.data);                
+    xhr.onerror = () =>{
+        reject("Network Error")
+    }
+    // console.log(client.data); 
+    xhr.send(client.data);                
     });
     
 
 }
 //xhr.update(data,id)
 update(data,id=""){
+    var client=this;
+    this.data=data;
+    this.id=id;
     return new Promise(function(resolve,reject){
-    client.xhr.open("PUT", this.url+id);
-    client.xhr.setRequestHeader("content-type", "application/json");
-    client.xhr.setRequestHeader("cache-control", "no-cache");
-    client.xhr.onload = () =>{
-        if (client.xhr.status==200)
-            resolve(client.xhr.response);
-        else
-            reject(client.xhr.statusText)
+    let xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.open("PUT", client.url+client.id);
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("cache-control", "no-cache");
+    xhr.onload = () =>{
+        if (xhr.status==200)
+            resolve(xhr.response);
+        else{
+            reject(xhr.responseText)
+        }
     } 
-    client.xhr.onerror = () => reject("Network Error")
-    client.xhr.send(data); 
+    xhr.onerror = () => reject("Network Error")
+    xhr.send(client.data); 
     }); 
 
 }
 //xhr.delete(id)
 delete(id){
+    var client=this;
+    this.id=id;
     return new Promise(function(resolve,reject){
-    client.xhr.open("DELETE", this.url+id);
-    client.xhr.setRequestHeader("cache-control", "no-cache");
-    client.xhr.onload = () =>{
-        if (client.xhr.status==200)
-            resolve(client.xhr.response);
-        else
-            reject(client.xhr.statusText)
+    let xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.open("DELETE", client.url+client.id);
+    xhr.setRequestHeader("cache-control", "no-cache");
+    xhr.onload = () =>{
+        console.log(xhr.responseText);
+        if (xhr.status==200)
+            resolve(xhr.response);
+        else{
+            reject(xhr.responseText)
+        }
     } 
-    client.xhr.onerror = () => reject("Network Error")
-    client.xhr.send("");
+    xhr.onerror = () => reject("Network Error")
+    xhr.send("");
     });
 }    
 }

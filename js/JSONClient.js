@@ -20,32 +20,30 @@ class JSONClient{
         jClient.xhr.get().then(function(response){
             resolve( JSON.parse(response))
         },function (reponse){
-            reject(console.log(reponse))
+            reject(reponse)
         }
-        )
+        ).catch(function(err){
+            reject(err)
+        })
     });//close promise
     
     }
 //json.post(data)
     post(data){
         var jClient=this;
-        console.log(this.data)
         this.data =data;
-        console.log(this.data)
         if(this.data.id!="undefined"){
             delete this.data.id;
-            console.log(this.data)
         }
         this.data=JSON.stringify(this.data)
         return new Promise(function(resolve,reject){
-        jClient.xhr.post(jClient.data).then(function(response){
-            console.log(response)
-            resolve( response)
+        jClient.xhr.post(jClient.data).then(function(result){
+            resolve(result)//same as data
         },function (reponse){
-            console.log(reponse)
             reject(reponse)
-        }
-        )
+        }).catch(function(err){
+            reject(err)
+        })
     });//close promise
 }
 //json.update(data)
@@ -54,17 +52,23 @@ class JSONClient{
         var jClient=this;
         this.data=data;
         if (typeof this.data=="object"){
-            //if(typeof data.id!="undefined")
-            this.id=this.data.id;
-            delete this.data.id;
-        this.data =JSON.stringify(this.data)
-        jClient.xhr.update(jClient.id).then(function(response){
-            return JSON.parse(response.responseText)
-        },function (reponse){
-            console.log(reponse)
-        }
-        )
-        }
+            if(typeof data.id!="undefined"){
+              this.id=this.data.id;
+              delete this.data.id;
+            }
+            this.data =JSON.stringify(this.data)
+            return new Promise( function (resolve,reject){
+                jClient.xhr.update(jClient.data,jClient.id).then(function(response){
+                    resolve(response.responseText)
+                },function (reponse){
+                    reject(reponse)
+                }).catch(function(err){
+                    reject(err)
+                })
+                
+            })
+
+             }
         else{
             console.log("expecting data of type object")
         }
@@ -79,13 +83,17 @@ class JSONClient{
         }
         else{
             this.id=this.data;
-        }     
-        jClient.xhr.delete(jClient.id).then(function(response){
-            return JSON.parse(response.responseText)
-        },function (reponse){
-            console.log(reponse)
         }
-        )
+        return new Promise(function (resolve,reject){
+            jClient.xhr.delete(jClient.id).then(function(response){
+                resolve(response.responseText)
+            },function (reponse){
+                reject(reponse)
+            }).catch(function(err){
+                reject(err)
+            })
+        })
+
 
     }
 //json.search(string)
@@ -93,11 +101,15 @@ class JSONClient{
         var jClient=this;
         this.str=str;
         this.str=string;
-        jClient.xhr.get("?q="+jClient.str).then(function(response){
-            return JSON.parse(response.responseText)
-        },function (reponse){
-            console.log(reponse)
-        }
-        )
+        return new Promise(function (resolve,reject){
+            jClient.xhr.get("?q="+jClient.str).then(function(response){
+                return JSON.parse(response.responseText)
+            },function (reponse){
+                reject(reponse)
+            }).catch(function(err){
+                reject(err)
+            })
+        })
+
     }
 }
