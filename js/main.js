@@ -5,7 +5,8 @@ var inPrice=0;
 var inDes="";
 var ADD=false;
 var id =0;
-var jsonXhr = new JSONClient("http://localhost:3000/items/");
+var url="http://localhost:3000/items/";
+var jsonXhr = new JSONClient(url);
 
 $( document ).ready(function() {
     loadItems();
