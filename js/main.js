@@ -1,15 +1,11 @@
 var list =[];
-var GET="GET"
-var POST="POST"
-var UPDATE="PUT"
-var DELETE="DELETE"
 var inId=-1;
 var inName="";
 var inPrice=0;
 var inDes="";
 var ADD=false;
 var id =0;
-var count=0;
+var jsonXhr = new JSONClient("http://localhost:3000/items/");
 
 $( document ).ready(function() {
     loadItems();
@@ -36,7 +32,6 @@ function done(){
             editData();
         }
         closeFull();
-        loadItems(); 
     }
 }
 
@@ -53,32 +48,37 @@ function addbtn(){
 
 function addData(){
     var newItem={name:inName,price:inPrice,description:inDes};
-    Transfer(newItem,POST).then(
-        loadItems()
-    ,function (e) {
-        // handle errors
-    });
+    jsonXhr.post(newItem).then(function (result){
+        //console.log(result)//same as new item in text
+        console.log("addData")
+        loadItems()});
+  
 }
 function editData(){
     var newItem={id:inId,name:inName,price:inPrice,description:inDes};
-    Transfer(newItem,UPDATE).then(function(e){
-    loadItems();
-    },function (e) {
-    // handle errors
-    });
+
+
+    jsonXhr.update(newItem).then(function(resulte){
+        loadItems();
+        },function (e) {
+        // handle errors
+        }).catch(function (err){
+            alert(err);
+        });
+
 }
 
 function deleteItem(id){
     
     closeFull()
-    Transfer(id,DELETE).then(function(e){
+    jsonXhr.delete(id).then(function(e){
         loadItems();
     },function (e) {
         // handle errors
+    }).catch(function (err){
+        alert(err);
     });
-   
-    
-    loadItems();
+
 }
 function editItem(id=-1){
     
@@ -134,13 +134,13 @@ function loadFull(id){
 }
 
 function loadItems(){
-Transfer("",GET).then(function (data) {
-    list=data;
     var mybody=document.getElementById("item_list");
     var myNav=document.getElementById("nav-north");
     mybody.innerHTML="";
     myNav.innerHTML="";
-    for (i in list){
+    jsonXhr.get().then(function(response){
+        list=response;
+        for (i in list){
         mybody.innerHTML+=`<div class="col-sm-3  col-xs-6 ibox"  >
         <img src="images/birds.jpg" onclick="showFull(`+list[i].id+`)" class="img-responsive margin"  alt="Image">
         <div class="ibox-text">
@@ -153,73 +153,8 @@ Transfer("",GET).then(function (data) {
         </div>
         </div>`
         myNav.innerHTML+=`<li><a href="#">`+list[i].name+`</a></li>`
-
-    }
-    }, function (e) {
-      // handle errors
-    });
+       }}).catch(function (err){
+           alert(err);
+       })
 
 }
-
-
-/******************************************************************
- -----------------------Network Part-------------------------------
- ******************************************************************/
-function Transfer(data,mode){
-    return new Promise(function (resolve, reject){
-    var id;
-    var dbAddr = " http://localhost:3000/items/";
-    console.log(data+" "+mode)
-    if (typeof data=="object"){
-        id=data.id;
-        delete data.id;
-    }
-    else{
-        id=data;
-        data=null;
-    }
-    data =JSON.stringify(data);
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;  
-    switch (mode){
-        case GET   : dbAddr=dbAddr;break;
-        case POST  : dbAddr=dbAddr;break;
-        case UPDATE: dbAddr=dbAddr+id;break;
-        case DELETE: dbAddr=dbAddr+id;break;
-    }
-    switch (mode){
-        case GET   :
-         xhr.open("GET", dbAddr);
-         xhr.setRequestHeader("content-type", "application/json");        
-         xhr.setRequestHeader("cache-control", "no-cache");
-         xhr.onload = () => resolve(JSON.parse(xhr.responseText));
-         xhr.onerror = () => reject(xhr.statusText);
-         xhr.send(data);
-        break;
-        case POST  :
-         xhr.open("POST", dbAddr);
-         xhr.setRequestHeader("content-type", "application/json");
-         xhr.setRequestHeader("cache-control", "no-cache");        
-         xhr.onload = () => resolve(xhr.responseText);
-         xhr.onerror = () => reject(xhr.statusText)
-         xhr.send(data);
-        break;
-        case UPDATE:
-         xhr.open("PUT", dbAddr);
-         xhr.setRequestHeader("content-type", "application/json");
-         xhr.setRequestHeader("cache-control", "no-cache");
-         xhr.onload = () => resolve(xhr.responseText);
-         xhr.onerror = () => reject(xhr.statusText)
-         xhr.send(data);
-        break;      
-        case DELETE:     
-         xhr.open("DELETE", dbAddr);
-         xhr.setRequestHeader("cache-control", "no-cache");
-         xhr.onload = () => resolve(xhr.responseText);
-         xhr.onerror = () => reject(xhr.statusText)
-         xhr.send(data);
-        break;
-    }
-});
-}
-/**************************************************************** */

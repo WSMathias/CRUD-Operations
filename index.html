@@ -29,8 +29,8 @@
                <li class="dropdown">
                   <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-tags"></span>Categories<b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                     <li><a href="#">North Indian</a></li>
-                     <li><a href="#">South Indian</a></li>
+                     <!-- <li><a href="#">North Indian</a></li>
+                     <li><a href="#">South Indian</a></li> -->
                   </ul>
                </li>
             </ul>
@@ -53,22 +53,22 @@
             <div class="well" >
                <ul class="nav nav-list">
                   <li>
-                     <label class="tree-toggler nav-header">North Indian</label>
+                     <label class="tree-toggler nav-header">Item List</label>
                      <ul class="nav nav-list tree" id="nav-north">
-                        <li><a href="#">north-1</a></li>
-                        <li><a href="#">north-2</a></li>
-                        <li><a href="#">north-3</a></li>
+                        <!-- <li><a href="#">item-1</a></li>
+                        <li><a href="#">item-2</a></li>
+                        <li><a href="#">item-3</a></li> -->
                      </ul>
                   </li>
                   <li class="divider"></li>
-                  <li>
-                     <label class="tree-toggler nav-header">South Indian</label>
+                  <!-- <li>
+                     <label class="tree-toggler nav-header">Item List 2</label>
                      <ul class="nav nav-list tree">
-                        <li><a href="#">south-1</a></li>
-                        <li><a href="#">south-2</a></li>
-                        <li><a href="#">south-3</a></li>
+                        <li><a href="#">item-1</a></li>
+                        <li><a href="#">item-2</a></li>
+                        <li><a href="#">item-3</a></li>
                      </ul>
-                  </li>
+                  </li> -->
                </ul>
             </div>
          </div>
@@ -79,7 +79,7 @@
          <div id="full-blur">
             <div id="full-window">
                <a href="#" class="btn btn-danger btn-lg close" onclick="closeFull()"><span class="glyphicon glyphicon-remove"></span> </a>
-               <!-- <a id="close" onclick="closeFull()" href="#">X</a> -->
+               <!-- <a id="close" onclick="closeFull()" href="#"><span class="glyphicon glyphicon-remove"></span></a> -->
                <div class="row container">
                   <div class="container  col-sm-6 full-img">
                      <img src="images/birds.jpg" class="img-responsive margin"  alt="Image">
@@ -88,7 +88,7 @@
                      <div class"col-sm-4 " id="fulldes">
                         <h2 id="pop-name"> name</h2>
                         <h3 id="pop-price"> price</h3>
-                        <p id="pop-des">description Simple Sidebar is a basic sidebar menu page layout for Bootstrap websites with off canvas navigation on smaller screen sizes</p>
+                        <p id="pop-des">description</p>
                      </div>
                      <div class"col-sm-4" id="editform">
                         <input type="hidden" id="in_id">
@@ -105,6 +105,7 @@
                <div id="tools-full">
                   <a href="#" class="btn btn-warning btn-lg" onclick="editItem()"><span class="glyphicon glyphicon-pencil"></span> </a>
                   <a href="#" class="btn btn-danger btn-lg" onclick="deleteItem()"><span class="glyphicon glyphicon-trash"></span> </a>
+                  <!-- <a href="#" class="btn btn-danger btn-lg close" onclick="closeFull()"><span class="glyphicon glyphicon-remove"></span> </a> -->
                </div>
             </div>
          </div>
@@ -120,6 +121,8 @@
              });
          });
       </script>
+      <script src="./js/HttpClient.js"></script>
+      <script src="./js/JSONClient.js"></script>
       <script src="./js/main.js"></script>
    </body>
 </html>
