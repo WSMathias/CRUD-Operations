@@ -1,6 +1,6 @@
-# CURD-Operations
+CRUD-Operations
 
-CURD operations can be performed using this website 
+CRUD operations can be performed using this website 
 website is bulit using HTML,CSS and JavaScript
 ## Requirements:
 
