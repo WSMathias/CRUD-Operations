@@ -1,10 +1,7 @@
-# Indian-Kitchen
+# CURD-Operations
 
-Catalog of indian dishes with following features  
-Add  
-Edit  
-Deleted  
-Bulit using HTML,CSS and JavaScript
+CURD operations can be performed using this website 
+website is bulit using HTML,CSS and JavaScript
 ## Requirements:
 
 *linux OS  
